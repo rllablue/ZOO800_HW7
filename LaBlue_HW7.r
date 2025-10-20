@@ -73,15 +73,19 @@ blocks_species <- blocks_comp_shp %>%
 
 ### --- PLOT --- ###
 
+vir_colors <- viridis::viridis(3) # make color blind-friendly palette
+
 ggplot(blocks_species) +
   geom_sf(aes(fill = transition_state), size = 0.1) +
-  scale_fill_manual(
+  scale_fill_manual( # hacking manual fill with viridis palette
     values = c(
-      "Colonization" = "#FFD700",
-      "Extinction"   = "#1E90FF",
-      "Persistence"  = "#32CD32"
+      "Colonization" = vir_colors[3], # assign accessible colors to states of interest
+      "Persistence"  = vir_colors[2],
+      "Extinction"   = vir_colors[1],
+      "Absence"      = "white" # force absence to white so it doesn't distract
     ),
-    na.value = "white"
+    breaks = c("Colonization", "Persistence", "Extinction"), # show only states of relevance
+    drop = FALSE
   ) +
   labs(
     fill = "Transition State",
@@ -96,4 +100,3 @@ ggplot(blocks_species) +
     plot.title = element_text(hjust = 0.5, face = "bold"),
     plot.caption = element_text(hjust = 0.5, size = 9, margin = margin(t = 20))
   )
-
