@@ -15,6 +15,7 @@
 
 library(dplyr)
 library(ggplot2)
+library(viridis)
 library(lubridate)
 library(readr)
 library(sf)
